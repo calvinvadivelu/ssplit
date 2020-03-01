@@ -1,0 +1,48 @@
+.header{
+    display: flex;
+    margin: 24px 8%;
+    justify-content: space-between;
+    padding-top: 40px;
+    height: 54px;
+    &__company{
+        display: flex;
+        &-logo{
+            background-image: url('../../images/astronaut.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100px;
+            height: 120px;
+            margin: 10px;
+        }   
+        &-name{
+            font-weight: bold;
+            font-size: 20px;
+            text-align: left;
+            color: whitesmoke;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+    }
+    &__btns{
+        display: flex;
+        margin-top: 14px;
+        &-info{
+            color: whitesmoke;
+            margin-right: 24px;
+            font-weight: 500;
+            padding: 8px 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        &-signup{
+            height: 24px;
+            padding: 8px 24px;
+            background-color: rgb(255, 185, 3);
+            font-weight: 600;
+            line-height: 23px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+
+}
