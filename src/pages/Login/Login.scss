@@ -1,6 +1,5 @@
 .loginpage{
     &__box{
-        height: 40vh;
         width: 30vw;
         margin: auto;
         position: relative;
@@ -10,6 +9,8 @@
         box-shadow: 0px 0px 17px 2px rgba(0,0,0,0.33);
         padding: 40px 32px;
         box-sizing: border-box;
+        min-width: 400px;
+        max-width: 440px;
         &-email{
 
         }
@@ -22,6 +23,9 @@
         }
         &-password{
 
+        }
+        &-switch{
+            cursor: pointer;
         }
     }
 }

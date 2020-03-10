@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 import Header from '../../components/Header/Header';
-import PageTemplate from '../PageTemplate/PageTemplate';
 import FormInput from '../../components/FormInput/FormInput';
+
+import { auth } from '../../firebase/firebase.utils';
+
 import './Login.scss';
 class Login extends Component {
     constructor(props) {
@@ -22,18 +24,41 @@ class Login extends Component {
 
         this.setState({[name]: value})
     }
+    
+    signup = async e => {
+        e.preventDefault();
+        const { email, password } = this.state
+
+        auth.createUserWithEmailAndPassword(email, password).catch(e => {
+            console.log('e.code :', e.code);
+            console.log('e.message :', e.message);
+        })
+        this.props.history.push('/')
+    }
+
+    signin = async e => {
+        e.preventDefault();
+        const { email, password } = this.state
+
+        auth.signInWithEmailAndPassword(email, password).catch(e => {
+            console.log('e.code :', e.code);
+            console.log('e.message :', e.message);
+        })
+        this.props.history.push('/')
+    }
 
     render() {
         const { email, firstName, lastName, password, confirmPassword, loginView } = this.state
         return (
             <div className='loginpage'>
-                <PageTemplate>
+                <div className="page">
+
                     <Header/>
                     <div className="loginpage__box">
                         {loginView ? 
                         <>
                             <div className="loginpage__box-title">LOG IN</div>
-                            <form action="submit">
+                            <form action="submit" onSubmit={this.signin}>
                                 <div className="loginpage__box-email">
                                     <FormInput
                                         id='email'
@@ -41,6 +66,7 @@ class Login extends Component {
                                         label='Email'
                                         value={email}
                                         handleChange={this.handleChange}
+                                        autoComplete="email"
                                     />
                                 </div>
                                 <div className="loginpage__box-password">
@@ -50,15 +76,17 @@ class Login extends Component {
                                         label='Password'
                                         value={password}
                                         handleChange={this.handleChange}
+                                        autoComplete="password"
                                     />
                                 </div>
+                                <button className='loginpage__box-btn' type="submit">LOG IN</button>
                             </form>
                         </>
                         
                         :
                         <>
                             <div className="loginpage__box-title">SIGN UP</div>
-                            <form action="submit">
+                            <form action="submit" onSubmit={this.signup}>
                                 <div className="loginpage__box-email">
                                     <FormInput
                                         id='email'
@@ -66,6 +94,7 @@ class Login extends Component {
                                         label='Email'
                                         value={email}
                                         handleChange={this.handleChange}
+                                        autoComplete="email"
                                     />
                                 </div>
                                 <div className="loginpage__box-names">
@@ -77,6 +106,7 @@ class Login extends Component {
                                             value={firstName}
                                             style={{margin: '0'}}
                                             handleChange={this.handleChange}
+                                            autoComplete="first name"
                                         />
                                     </div>
                                     <div className="loginpage__box-names-last">
@@ -85,9 +115,9 @@ class Login extends Component {
                                             type='text'
                                             label='Last Name'
                                             value={lastName}
-                                            multi={true}
                                             style={{margin: '0'}}
                                             handleChange={this.handleChange}
+                                            autoComplete="last name"
                                         />
                                     </div>
                                 </div>
@@ -109,12 +139,15 @@ class Login extends Component {
                                         handleChange={this.handleChange}
                                     />
                                 </div>
+                                <button className='loginpage__box-btn' type="submit">SIGN UP</button>
                             </form>
                         </>
                         }
-                    <div className="loginpage__box-switch" onClick={() => this.setState({loginView: !loginView})}>{!loginView ? 'LOG IN' : 'SIGN UP'}</div>
+                        <span className="loginpage__box-btnlabel">{!loginView ? "Don't have" : 'Already have'} an account?</span>
+                        <span className="loginpage__box-switch" onClick={() => this.setState({loginView: !loginView})}>{!loginView ? 'LOG IN' : 'SIGN UP'}</span>
                     </div>
-                </PageTemplate>
+                </div>
+
             </div>
         );
     }

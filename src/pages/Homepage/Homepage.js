@@ -1,15 +1,14 @@
 import React from 'react';
 
 import Header from '../../components/Header/Header';
-import PageTemplate from '../PageTemplate/PageTemplate';
 import './Homepage.scss'
 const Homepage = () => {
     return (
         <div className='homepage'>
-            <PageTemplate>
+            <div className='page'>
                 <Header/>
                 <div className="homepage-body"></div>
-            </PageTemplate>
+            </div>
         </div>
     );
 }

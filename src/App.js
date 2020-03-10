@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Homepage from './pages/Homepage/Homepage';
 import LoginPage from './pages/Login/Login'
 import InfoPage from './pages/InfoPage/InfoPage';
+import Dashboard from './pages/Dashboard/Dashboard';
+import { setCurrentUser } from './redux/user/user.actions';
+import { selectCurrentUser } from './redux/user/user.selector';
 
-import './App.css';
-const App = () => {
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import './App.scss';
+const App = ({ setCurrentUser, currentUser }) => {
+
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged( async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
+
+        userRef.onSnapshot(snapShot => {
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data(),
+          })
+        })
+      }
+      else {
+        setCurrentUser(userAuth);
+        console.log('when the user is logging out, or no userAuth', userAuth);
+      }
+    });
+    return () => unsubscribe();
+  }, [setCurrentUser]);
+
   return (
     <div>
       <Switch>
-        <Route exact path='/' component={Homepage}/>
+        <Route exact path='/' component={currentUser ? Dashboard : Homepage}/>
         <Route exact path='/signup' component={LoginPage}/>
         <Route exact path='/info' component={InfoPage}/>
         {/* <Route path='/shop' component={Shoppage}/>           */}
@@ -41,5 +68,12 @@ const App = () => {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  currentUser: selectCurrentUser(state)
+})
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

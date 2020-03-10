@@ -1,15 +1,14 @@
 import React from 'react';
 
 import Header from '../../components/Header/Header';
-import PageTemplate from '../PageTemplate/PageTemplate';
 
 const InfoPage = () => {
     return (
         <div className='infopage'>
-            <PageTemplate>
+            <div className='page'>
                 <Header/>
                 I'm a str8 up thug
-            </PageTemplate>
+            </div>
         </div>
     )
 };
