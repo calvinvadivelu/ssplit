@@ -27,10 +27,14 @@ class Login extends Component {
     
     signup = async e => {
         e.preventDefault();
-        const { email, password } = this.state
+        const { email, password, firstName, lastName } = this.state
 
-        auth.createUserWithEmailAndPassword(email, password).catch(e => {
-            console.log('e.code :', e.code);
+        await auth.createUserWithEmailAndPassword(email, password).then((userData) => {
+            userData.user.updateProfile({
+                displayName: `${firstName} ${lastName}`
+            })
+        })
+        .catch(e => {
             console.log('e.message :', e.message);
         })
         this.props.history.push('/')
@@ -143,7 +147,7 @@ class Login extends Component {
                             </form>
                         </>
                         }
-                        <span className="loginpage__box-btnlabel">{!loginView ? "Don't have" : 'Already have'} an account?</span>
+                        <span className="loginpage__box-btnlabel">{loginView ? "Don't have" : 'Already have'} an account?   </span>
                         <span className="loginpage__box-switch" onClick={() => this.setState({loginView: !loginView})}>{!loginView ? 'LOG IN' : 'SIGN UP'}</span>
                     </div>
                 </div>
