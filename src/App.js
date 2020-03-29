@@ -34,6 +34,35 @@ const App = ({ setCurrentUser, currentUser }) => {
     return () => unsubscribe();
   }, [setCurrentUser]);
 
+
+  // useEffect(() => {
+  //   createProduct().then(res => {
+  //     setTimeout(() => {
+  //       createPlan(res.id)
+  //       console.log('HELLOOOO')
+  //     }, 1000)
+  //   });
+  // }, [])
+
+  // const createProduct = async () => {
+  //   const response = await fetch('/api/createproduct');
+  //   const body = await response.json();
+  //   console.log('body :', body);
+  //   if (response.status !== 200) throw Error(body.message);
+    
+  //   return body;
+  // }
+
+  // const createPlan = async (prodID) => {
+  //   const response = await fetch(`/api/createplan?product_id=${prodID}`);
+  //   const body = await response.json();
+  //   console.log('body :', body);
+  //   if (response.status !== 200) throw Error(body.message);
+    
+  //   return body;
+  // }
+
+
   return (
     <div>
       <Switch>
