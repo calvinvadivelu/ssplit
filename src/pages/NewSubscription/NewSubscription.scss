@@ -1,0 +1,17 @@
+.newsub{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__form{
+        width: 33%;
+        &-sharers{
+            &__container{
+                &-labels, &-person{
+                    display: grid;
+                    grid-template-columns: 45% 45%;
+                }
+
+            }
+        }
+    }
+}
