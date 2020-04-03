@@ -2,10 +2,13 @@ import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+//pages
 import Homepage from './pages/Homepage/Homepage';
 import LoginPage from './pages/Login/Login'
 import InfoPage from './pages/InfoPage/InfoPage';
 import Dashboard from './pages/Dashboard/Dashboard';
+import NewSubscription from './pages/NewSubscription/NewSubscription';
+
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
@@ -34,41 +37,13 @@ const App = ({ setCurrentUser, currentUser }) => {
     return () => unsubscribe();
   }, [setCurrentUser]);
 
-
-  // useEffect(() => {
-  //   createProduct().then(res => {
-  //     setTimeout(() => {
-  //       createPlan(res.id)
-  //       console.log('HELLOOOO')
-  //     }, 1000)
-  //   });
-  // }, [])
-
-  // const createProduct = async () => {
-  //   const response = await fetch('/api/createproduct');
-  //   const body = await response.json();
-  //   console.log('body :', body);
-  //   if (response.status !== 200) throw Error(body.message);
-    
-  //   return body;
-  // }
-
-  // const createPlan = async (prodID) => {
-  //   const response = await fetch(`/api/createplan?product_id=${prodID}`);
-  //   const body = await response.json();
-  //   console.log('body :', body);
-  //   if (response.status !== 200) throw Error(body.message);
-    
-  //   return body;
-  // }
-
-
   return (
     <div>
       <Switch>
         <Route exact path='/' component={currentUser ? Dashboard : Homepage}/>
         <Route exact path='/signup' component={LoginPage}/>
         <Route exact path='/info' component={InfoPage}/>
+        <Route exact path='/new' component={currentUser ? NewSubscription : Homepage}/>
         {/* <Route path='/shop' component={Shoppage}/>           */}
         {/* <Route exact path='/checkout' component={CheckoutPage}/> */}
       </Switch>
