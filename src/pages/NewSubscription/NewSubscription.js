@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
+
+import { selectCurrentUser } from '../../redux/user/user.selector';
+import { createProduct, createPlan } from '../../api/paypal.api';
+import { sendEmails } from '../../api/email.api';
 
 import './NewSubscription.scss';
-const NewSubscription = () => {
+const NewSubscription = ({ currentUser }) => {
     const [sharers, editSharers] = useState([{ name: '', email: '' }])
     const [subscriptionName, setSubscriptionName] = useState('')
     const [subscriptionDescription, setSubscriptionDescription] = useState('')
@@ -35,33 +40,16 @@ const NewSubscription = () => {
     }
     const submitSubscription = (e) => {
         e.preventDefault();
-
+        if (subscriptionName === '' || subscriptionDescription === '') return;
         createProduct(subscriptionName, subscriptionDescription).then(res => {
             const productID = res.id
-            createPlan(productID)
-            console.log('WHATS GOOD')
+            createPlan(productID).then(res => {
+                const planID = res.id
+                sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planID}`).then(res => {
+                    console.log('res :', res);
+                })
+            })
         })
-
-        console.log('subscriptionName :', subscriptionName);
-        console.log('sharers :', sharers);
-    }
-
-    const createProduct = async (name, description) => {
-        const response = await fetch(`/api/createproduct?name=${name}`);
-        const body = await response.json();
-        console.log('body of product create :', body);
-        if (response.status !== 200) throw Error(body.message);
-        
-        return body;
-    }
-
-    const createPlan = async (prodID) => {
-        const response = await fetch(`/api/createplan?product_id=${prodID}`);
-        const body = await response.json();
-        console.log('body of plan create :', body);
-        if (response.status !== 200) throw Error(body.message);
-        
-        return body;
     }
 
     return (
@@ -112,5 +100,7 @@ const NewSubscription = () => {
         </div>
     );
 };
-
-export default NewSubscription;
+const mapStateToProps = (state) => ({
+    currentUser: selectCurrentUser(state)
+})
+export default connect(mapStateToProps, null)(NewSubscription);
