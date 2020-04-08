@@ -8,6 +8,7 @@ import LoginPage from './pages/Login/Login'
 import InfoPage from './pages/InfoPage/InfoPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import NewSubscription from './pages/NewSubscription/NewSubscription';
+import GetSubscriptionPage from './pages/GetSubscriptionPage/GetSubscriptionPage';
 
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
@@ -44,8 +45,8 @@ const App = ({ setCurrentUser, currentUser }) => {
         <Route exact path='/signup' component={LoginPage}/>
         <Route exact path='/info' component={InfoPage}/>
         <Route exact path='/new' component={currentUser ? NewSubscription : Homepage}/>
-        {/* <Route path='/shop' component={Shoppage}/>           */}
-        {/* <Route exact path='/checkout' component={CheckoutPage}/> */}
+        <Route exact path='/new/:planID' component={GetSubscriptionPage}/>
+
       </Switch>
       <div className="background">
         <span></span>
