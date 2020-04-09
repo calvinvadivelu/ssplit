@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 
 import { selectCurrentUser } from '../../redux/user/user.selector';
-import { createProduct, createPlan } from '../../api/paypal.api';
+import { createSubscription } from '../../api/paypal.api';
 import { sendEmails } from '../../api/email.api';
 
 import './NewSubscription.scss';
@@ -12,7 +12,7 @@ const NewSubscription = ({ currentUser }) => {
     const [sharers, editSharers] = useState([{ name: '', email: '' }])
     const [subscriptionName, setSubscriptionName] = useState('')
     const [subscriptionDescription, setSubscriptionDescription] = useState('')
-
+    const [subscriptionPrice, setSubscriptionPrice] = useState('')
     const options = [
         { label: 'Netflix', value: 'netflix'},
         { label: 'Spotify', value: 'spotify'},
@@ -41,17 +41,17 @@ const NewSubscription = ({ currentUser }) => {
     const submitSubscription = (e) => {
         e.preventDefault();
         if (subscriptionName === '' || subscriptionDescription === '') return;
-        createProduct(subscriptionName, subscriptionDescription).then(res => {
-            const productID = res.id
-            createPlan(productID).then(res => {
-                const planID = res.id
-                sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planID}`).then(res => {
-                    console.log('res :', res);
-                })
+
+        createSubscription(subscriptionName, subscriptionDescription, subscriptionPrice).then(res => {
+            const planID = res.id
+            sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planID}`).then(res => {
+                console.log('res :', res);
             })
         })
     }
 
+
+    console.log('subscriptionPrice :', subscriptionPrice);
     return (
         <div className='logged-in-page newsub'>
             <form action="submit" className="newsub__form">
@@ -75,8 +75,11 @@ const NewSubscription = ({ currentUser }) => {
                         decimalScale={2}
                         allowNegative={false}
                         placeholder='0.00'
+                        prefix={'$'}
                         name='subscription-price'
                         displayType='input'
+                        value={subscriptionPrice}
+                        onValueChange={(values) => setSubscriptionPrice(values.value)}
                     />
                 </div>
                 <div className="newsub__form-sharers">
