@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import { auth } from '../../firebase/firebase.utils';
+import { createUser } from '../../api/user.api';
 import FormInput from '../../components/FormInput/FormInput';
 
-import './LoginBox.scss'
-const LoginBox = ({ history }) => {
 
+import './LoginBox.scss'
+const LoginBox = ({ onLogin }) => {
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -15,26 +16,25 @@ const LoginBox = ({ history }) => {
 
     const signup = async e => {
         e.preventDefault();
-        await auth.createUserWithEmailAndPassword(email, password).then((userData) => {
-            userData.user.updateProfile({
-                displayName: `${firstName} ${lastName}`
-            })
-        })
+        await auth.createUserWithEmailAndPassword(email, password)
         .catch(e => {
             console.log('e.code :', e.code); 
             console.log('e.message :', e.message);
         })
-        history.push('/')
+        await createUser(`${firstName} ${lastName}`, email)
+
+        onLogin();
     }
 
     const signin = async e => {
         e.preventDefault();
-
-        auth.signInWithEmailAndPassword(email, password).catch(e => {
+        await auth.signInWithEmailAndPassword(email, password)
+        .catch(e => {
             console.log('e.code :', e.code);
             console.log('e.message :', e.message);
         })
-        history.push('/')
+        
+        onLogin();
     }
 
 

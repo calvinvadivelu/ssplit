@@ -12,7 +12,7 @@ const Login = ({ history }) => {
             <div className="page">
                 <Header/>
                 <LoginBox
-                history= { history }
+                onLogin= {() => history.push('/') }
                 />
             </div>
         </div>
