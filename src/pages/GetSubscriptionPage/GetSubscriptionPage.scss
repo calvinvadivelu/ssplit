@@ -1,0 +1,14 @@
+.getsub{
+    display: flex;
+    align-items: center;
+    &__left{
+        margin: auto;
+    }
+    &__right{
+        width: 400px;
+        padding: 0 40px;
+    }
+    &-intro{
+        margin: 8px 0;
+    }
+}

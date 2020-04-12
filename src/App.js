@@ -9,11 +9,13 @@ import InfoPage from './pages/InfoPage/InfoPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import NewSubscription from './pages/NewSubscription/NewSubscription';
 import GetSubscriptionPage from './pages/GetSubscriptionPage/GetSubscriptionPage';
+import ConfirmSharer from './pages/ConfirmSharer/ConfirmSharer';
 
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { getUser } from './api/user.api';
 import './App.scss';
 const App = ({ setCurrentUser, currentUser }) => {
 
@@ -22,12 +24,9 @@ const App = ({ setCurrentUser, currentUser }) => {
     const unsubscribe = auth.onAuthStateChanged( async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
-
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          })
+        userRef.onSnapshot(async snapShot => {
+          const user = await getUser(snapShot.data().email)
+          setCurrentUser({...user})
         })
       }
       else {
@@ -46,7 +45,7 @@ const App = ({ setCurrentUser, currentUser }) => {
         <Route exact path='/info' component={InfoPage}/>
         <Route exact path='/new' component={currentUser ? NewSubscription : Homepage}/>
         <Route exact path='/new/:planID' component={GetSubscriptionPage}/>
-
+        <Route exact path='/join/:planID' component={ConfirmSharer}/>
       </Switch>
       <div className="background">
         <span></span>

@@ -40,9 +40,8 @@ const NewSubscription = ({ currentUser }) => {
     }
     const submitSubscription = (e) => {
         e.preventDefault();
-        if (subscriptionName === '' || subscriptionDescription === '') return;
-
-        createSubscription(subscriptionName, subscriptionDescription, subscriptionPrice).then(res => {
+        if (subscriptionName === '' || subscriptionDescription === '')  return;
+        createSubscription(subscriptionName, subscriptionDescription, { name: currentUser.fullName, email: currentUser.email }, 'DIGITAL', "SOFTWARE", Number(subscriptionPrice), sharers).then(res => {
             const planID = res.id
             sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planID}`).then(res => {
                 console.log('res :', res);

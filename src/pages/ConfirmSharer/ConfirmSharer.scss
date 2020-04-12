@@ -1,0 +1,11 @@
+.sharerconfirm {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    &-left, &-right {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+}
