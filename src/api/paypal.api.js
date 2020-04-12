@@ -29,14 +29,19 @@ export const getPlanList = async (plan_id) => {
 }
 
 //POSTS
-export const createSubscription = async (name, description, price) => {
+export const createSubscription = async (name, description, ownerInfo, type, category, price, sharers) => {
     const response = await fetch(`/paypal/createSubscription`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
             name,
             description,
+            ownerInfo,
+            type,
+            category,
             price,
+            sharers,
+            confirmedSharers: []
         })
     });
     const body = await response.json();
@@ -46,7 +51,7 @@ export const createSubscription = async (name, description, price) => {
     return body;
 }
 
-//DEPRACATED
+//DEPRECATED
 export const createProduct = async (name, description) => {
     const response = await fetch(`/paypal/createproduct`, {
         method: 'POST',
@@ -63,7 +68,7 @@ export const createProduct = async (name, description) => {
     return body;
 }
 
-//DEPRACATED
+//DEPRECATED
 export const createPlan = async (prodID) => {
     const response = await fetch(`/paypal/createplan`, {
         method: 'POST',
