@@ -67,6 +67,7 @@ const GetSubscriptionPage = ({ history, currentUser, setGuestUser, subscriptionD
     );
 };
 
+
 const mapStateToProps = (state) => ({
     currentUser: selectCurrentUser(state),
     subscriptionData: selectSubscriptionData(state)
