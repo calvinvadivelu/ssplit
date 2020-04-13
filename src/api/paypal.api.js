@@ -29,7 +29,7 @@ export const getPlanList = async (plan_id) => {
 }
 
 //POSTS
-export const createSubscription = async (name, description, ownerInfo, type, category, price, sharers) => {
+export const createSubscription = async (name, description, ownerInfo, type, category, totalPrice, pricePerPerson, sharers) => {
     const response = await fetch(`/paypal/createSubscription`, {
         method: 'POST',
         headers: headers,
@@ -39,9 +39,9 @@ export const createSubscription = async (name, description, ownerInfo, type, cat
             ownerInfo,
             type,
             category,
-            price,
+            totalPrice,
+            pricePerPerson,
             sharers,
-            confirmedSharers: []
         })
     });
     const body = await response.json();
