@@ -1,5 +1,6 @@
-## Available Scripts
+Backend is available in ssplit-server (https://github.com/calvinvadivelu/ssplit-server)
 
+## Available Scripts
 In the project directory, you can run:
 
 ### `yarn start`
