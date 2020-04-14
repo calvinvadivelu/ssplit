@@ -4,8 +4,8 @@ const headers = {
 }
 
 //GETS
-export const getPlanDetails = async (plan_id) => {
-    const response = await fetch(`/paypal/plandetails?plan_id=${plan_id}`, {
+export const getPlanDetails = async (planId) => {
+    const response = await fetch(`/paypal/plandetails?planId=${planId}`, {
         method: 'GET',
         headers: headers,
     });
@@ -16,7 +16,7 @@ export const getPlanDetails = async (plan_id) => {
     return body;
 }
 
-export const getPlanList = async (plan_id) => {
+export const getPlanList = async () => {
     const response = await fetch(`/paypal/listplans`, {
         method: 'GET',
         headers: headers,
@@ -51,7 +51,32 @@ export const createSubscription = async (name, description, ownerInfo, type, cat
     return body;
 }
 
-//DEPRECATED
+//PATCH
+
+export const confirmSharer = async (planId, sharerEmail, sharerConfirmationId) => {
+    const response = await fetch(`/paypal/confirmSharer`, {
+        method: 'PATCH',
+        headers: headers,
+        body: JSON.stringify({
+            planId,
+            sharerEmail,
+            sharerConfirmationId,
+        })
+    });
+    const body = await response.json();
+    console.log('body of subscription create :', body);
+    if (response.status !== 200) throw Error(body.message);
+    
+    return body;
+}
+
+
+
+
+
+
+
+//*** DEPRECATED ***//
 export const createProduct = async (name, description) => {
     const response = await fetch(`/paypal/createproduct`, {
         method: 'POST',
@@ -68,7 +93,7 @@ export const createProduct = async (name, description) => {
     return body;
 }
 
-//DEPRECATED
+//*** DEPRECATED ***//
 export const createPlan = async (prodID) => {
     const response = await fetch(`/paypal/createplan`, {
         method: 'POST',

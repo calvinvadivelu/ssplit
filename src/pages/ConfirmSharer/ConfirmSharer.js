@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { PayPalButton } from "react-paypal-button-v2";
 
-import { getPlanDetails } from '../../api/paypal.api';
+import { getPlanDetails, confirmSharer } from '../../api/paypal.api';
 
 import { selectCurrentUser, selectGuestUser } from '../../redux/user/user.selector';
 import { selectSubscriptionData } from '../../redux/subscription/sub.selector';
 import { setSubscriptionData } from '../../redux/subscription/sub.actions';
+
 import './ConfirmSharer.scss'
 const ConfirmSharer = ({ currentUser, guestUser, history, subscriptionData }) => {
     let { planID } = useParams();
     useEffect(() => {
-        if (subscriptionData === null) { //re-get the subscription data if they refresh the page
+        if (subscriptionData === null) {                            //re-get the subscription data if they refresh the page
             getPlanDetails(planID).then(response => {
-                console.log('response plan details:', response);
                 setSubscriptionData(response)
             })
         }
     })
-    
     useEffect(() => {
         if (!currentUser && !guestUser) history.push(`/new/${planID}`)
     }, [currentUser, guestUser, history, planID])
     
-    const { name, price, sharers, ownerInfo } = subscriptionData
+    const { name, totalPrice, pricePerPerson, ownerInfo } = subscriptionData
     
     return (
         <div className='logged-in-page sharerconfirm'>
@@ -32,15 +32,30 @@ const ConfirmSharer = ({ currentUser, guestUser, history, subscriptionData }) =>
             <section className='sharerconfirm-left'>
                 Subscription Name: {name} 
                 <br/>
-                Total Subscription Price: {price}
+                Total Subscription Price: {totalPrice}
                 <br/>
-                Subscription Price per Sharer: {price/(sharers.length + 1)}
+                Subscription Price per Sharer: {pricePerPerson}
                 <br/>
                 Subscription Payer: {ownerInfo.name}
                 <br/>
             </section>
             <section className='sharerconfirm-right'>
-                
+            <PayPalButton
+                options={{
+                    vault: true,
+                }}
+                createSubscription={(data, actions) => {
+                    return actions.subscription.create({
+                        plan_id: planID
+                    });
+                }}
+                onApprove={(data, actions) => {
+                    return actions.subscription.get().then((details) => {
+                        console.log('details :', details);
+                        confirmSharer(planID, guestUser, details.id)
+                    });
+                }}
+            />
             </section>
         </div>
     );
