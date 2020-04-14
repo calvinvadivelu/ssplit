@@ -31,13 +31,13 @@ const GetSubscriptionPage = ({ history, currentUser, setGuestUser, subscriptionD
     }, [subscriptionData])
 
     useEffect(() => {
-        console.log('currentUser :', currentUser);
         if (currentUser) {
             onLogin();
         }
     }, [currentUser, onLogin])
 
-    const onGuestLogin = () => {
+    const onGuestLogin = (e) => {
+        e.preventDefault()
         setGuestUser(guestEmail)
         onLogin();
     }
@@ -51,9 +51,12 @@ const GetSubscriptionPage = ({ history, currentUser, setGuestUser, subscriptionD
                     <div className="getsub-intro">{subscriptionData.ownerInfo.name.split(' ')[0]} has invited you to share a subscription for {subscriptionData.name} with him</div>
                     <div className="getsub-intro">If this was meant for you and you haven't used ssplit before, create an account on the right and we can show you how easy this is!</div>
                     <div className="getsub-intro">If you don't want to create an account, you can continue as a guest with just your email address and we won't harvest your data.</div>
-                    <label htmlFor="email">Guest Email</label>
-                    <input type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)}/>
-                    <button onClick={onGuestLogin}>Continue</button>
+                    <div className="getsub-intro">Please use the email you recieved the link on to sign in.</div>
+                    <form action="submit" onSubmit={onGuestLogin}>
+                        <label htmlFor="email">Guest Email</label>
+                        <input type="email" value={guestEmail} onChange={(e) => setGuestEmail(e.target.value)}/>
+                        <button type='submit'>Continue</button>
+                    </form>
                 </>
                 }
             </section>
@@ -66,6 +69,7 @@ const GetSubscriptionPage = ({ history, currentUser, setGuestUser, subscriptionD
         </div>
     );
 };
+
 
 const mapStateToProps = (state) => ({
     currentUser: selectCurrentUser(state),
