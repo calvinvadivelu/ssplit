@@ -2,8 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getPlanDetails } from '../../api/paypal.api';
-
 import { setGuestUser } from '../../redux/user/user.actions';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import { setSubscriptionData } from '../../redux/subscription/sub.actions';
@@ -20,10 +18,7 @@ const GetSubscriptionPage = ({ history, currentUser, setGuestUser, subscriptionD
     const onLogin = useCallback(() => history.push(`/join/${planID}`), [history, planID])
 
     useEffect(() => {
-        getPlanDetails(planID).then(response => {
-            console.log('response plan details:', response);
-            setSubscriptionData(response)
-        })
+        setSubscriptionData(planID)
     } , [planID, setSubscriptionData])
 
     useEffect(() => {
@@ -78,7 +73,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
     setGuestUser: user => dispatch(setGuestUser(user)),
-    setSubscriptionData: subscriptionData => dispatch(setSubscriptionData(subscriptionData))
+    setSubscriptionData: planID => dispatch(setSubscriptionData(planID))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetSubscriptionPage);

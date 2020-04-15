@@ -22,7 +22,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         case 'SET_GUEST_USER' :
             return {
                 ...state,
-                guestUser: action.payload
+                guestUser: { email: action.payload }
             }
         default:
             return state;
