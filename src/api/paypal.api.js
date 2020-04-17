@@ -51,6 +51,25 @@ export const createSubscription = async (name, description, ownerInfo, type, cat
     return body;
 }
 
+export const createPayout = async (receivingMethod, senderId, amount, receiverAddress, planId) => {
+    const response = await fetch('/paypal/createPayout', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+            type: receivingMethod,
+            senderId,
+            amount,
+            receiverAddress,
+            planId,
+        })
+    })
+    if (response.status !== 200) throw Error('Error with creating payout');
+    const body = await response.json();
+    console.log('body of create payout :', body)
+    return body;
+
+}
+
 //PATCH
 
 export const confirmSharer = async (planId, sharerEmail, sharerConfirmationId) => {

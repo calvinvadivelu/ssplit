@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 
 import { selectCurrentUser } from '../../redux/user/user.selector';
-import { createSubscription } from '../../api/paypal.api';
+import { createSubscription, createPayout } from '../../api/paypal.api';
 import { sendEmails } from '../../api/email.api';
 
 import './NewSubscription.scss';
@@ -44,15 +44,19 @@ const NewSubscription = ({ currentUser }) => {
         const totalPrice = Number(subscriptionPrice)
         const pricePerPerson = totalPrice/(sharers.length+1)
         createSubscription(subscriptionName, subscriptionDescription, { name: currentUser.fullName, email: currentUser.email }, 'DIGITAL', "SOFTWARE", Number(subscriptionPrice), pricePerPerson, sharers).then(res => {
-            const planID = res.id
-            sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planID}`).then(res => {
+            const planId = res.id
+            sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planId}`).then(res => {
                 console.log('res :', res);
             })
+            const amount = {
+                value: pricePerPerson.toString(),
+                currency: 'USD'
+            }
+            createPayout('EMAIL', currentUser._id, amount, currentUser.email, planId)
         })
     }
 
 
-    console.log('subscriptionPrice :', subscriptionPrice);
     return (
         <div className='logged-in-page newsub'>
             <form action="submit" className="newsub__form">
@@ -61,13 +65,13 @@ const NewSubscription = ({ currentUser }) => {
                     <CreatableSelect
                         options={options}
                         onChange={option => setSubscriptionName(option.value)}
-                        name='subscription-name'
+                        id='subscription-name'
                         placeholder='Name?'
                     />
                 </div>
                 <div className="newsub__form-description">
                     <label htmlFor="subscription-name" className='newsub__form-description-label'>Short description of what subscription is?</label>
-                    <input type="text" name='subscription-name' className='newsub__form-description-input' onChange={(e) => setSubscriptionDescription(e.target.value)}/>
+                    <input type="text" id='subscription-name' className='newsub__form-description-input' onChange={(e) => setSubscriptionDescription(e.target.value)}/>
                 </div>
                 <div className="newsub__form-price">
                     <label htmlFor="subscription-price">What is the total price of your Subscription Service monthly?</label>
@@ -77,7 +81,7 @@ const NewSubscription = ({ currentUser }) => {
                         allowNegative={false}
                         placeholder='0.00'
                         prefix={'$'}
-                        name='subscription-price'
+                        id='subscription-price'
                         displayType='input'
                         value={subscriptionPrice}
                         onValueChange={(values) => setSubscriptionPrice(values.value)}
@@ -92,8 +96,8 @@ const NewSubscription = ({ currentUser }) => {
                         </div>
                         {sharers.map((sharer, key) => 
                             <div className="newsub__form-sharers__container-person" key={key}>
-                                <input type="text" autoComplete="new-password" name='sharers-name' className='newsub__form-sharers__container-person-name' value={sharer.name} onChange={(e) => editSharerName(e.target.value, key)}/>
-                                <input type="email" autoComplete="new-password" name='sharers-email' className='newsub__form-sharers__container-person-email'value={sharer.email} onChange={(e) => editSharerEmail(e.target.value, key)}/>
+                                <input type="text" autoComplete="new-password" id='sharers-name' className='newsub__form-sharers__container-person-name' value={sharer.name} onChange={(e) => editSharerName(e.target.value, key)}/>
+                                <input type="email" autoComplete="new-password" id='sharers-email' className='newsub__form-sharers__container-person-email'value={sharer.email} onChange={(e) => editSharerEmail(e.target.value, key)}/>
                             </div>
                         )}
                     </div>
