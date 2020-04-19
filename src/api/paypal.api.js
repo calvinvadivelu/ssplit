@@ -29,7 +29,7 @@ export const getPlanList = async () => {
 }
 
 //POSTS
-export const createSubscription = async (name, description, ownerInfo, type, category, totalPrice, pricePerPerson, sharers) => {
+export const createSubscription = async (name, description, ownerInfo, type, category, totalPrice, pricePerPerson, currency, sharers, receivingMethod, receiverAddress, senderId, payoutDate) => {
     const response = await fetch(`/paypal/createSubscription`, {
         method: 'POST',
         headers: headers,
@@ -41,7 +41,13 @@ export const createSubscription = async (name, description, ownerInfo, type, cat
             category,
             totalPrice,
             pricePerPerson,
+            currency,
             sharers,
+            receivingMethod,
+            receiverAddress,
+            senderId,
+            payoutDate,
+
         })
     });
     const body = await response.json();
@@ -51,35 +57,17 @@ export const createSubscription = async (name, description, ownerInfo, type, cat
     return body;
 }
 
-export const createPayout = async (receivingMethod, senderId, amount, receiverAddress, planId) => {
-    const response = await fetch('/paypal/createPayout', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-            type: receivingMethod,
-            senderId,
-            amount,
-            receiverAddress,
-            planId,
-        })
-    })
-    if (response.status !== 200) throw Error('Error with creating payout');
-    const body = await response.json();
-    console.log('body of create payout :', body)
-    return body;
-
-}
-
 //PATCH
 
-export const confirmSharer = async (planId, sharerEmail, sharerConfirmationId) => {
+export const confirmSharer = async (planId, payerId, sharerEmail, subscriptionId) => {
     const response = await fetch(`/paypal/confirmSharer`, {
         method: 'PATCH',
         headers: headers,
         body: JSON.stringify({
             planId,
+            payerId,
             sharerEmail,
-            sharerConfirmationId,
+            subscriptionId,
         })
     });
     const body = await response.json();

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import CreatableSelect from 'react-select/creatable';
 import NumberFormat from 'react-number-format';
-import { connect } from 'react-redux';
 
 import { selectCurrentUser } from '../../redux/user/user.selector';
-import { createSubscription, createPayout } from '../../api/paypal.api';
+import { createSubscription } from '../../api/paypal.api';
 import { sendEmails } from '../../api/email.api';
 
 import './NewSubscription.scss';
@@ -13,6 +13,7 @@ const NewSubscription = ({ currentUser }) => {
     const [subscriptionName, setSubscriptionName] = useState('')
     const [subscriptionDescription, setSubscriptionDescription] = useState('')
     const [subscriptionPrice, setSubscriptionPrice] = useState('')
+    const [payoutDate, setPayoutDate] = useState('1')
     const options = [
         { label: 'Netflix', value: 'netflix'},
         { label: 'Spotify', value: 'spotify'},
@@ -43,16 +44,26 @@ const NewSubscription = ({ currentUser }) => {
         if (subscriptionName === '' || subscriptionDescription === '')  return;
         const totalPrice = Number(subscriptionPrice)
         const pricePerPerson = totalPrice/(sharers.length+1)
-        createSubscription(subscriptionName, subscriptionDescription, { name: currentUser.fullName, email: currentUser.email }, 'DIGITAL', "SOFTWARE", Number(subscriptionPrice), pricePerPerson, sharers).then(res => {
+        createSubscription(
+            subscriptionName,
+            subscriptionDescription,
+            { 
+                name: currentUser.fullName,
+                email: currentUser.email
+            },
+            'DIGITAL', "SOFTWARE",
+            Number(subscriptionPrice),
+            pricePerPerson,
+            'USD',
+            sharers,
+            'EMAIL',
+            currentUser.email,
+            Number(payoutDate),
+        ).then(res => {
             const planId = res.id
             sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planId}`).then(res => {
                 console.log('res :', res);
             })
-            const amount = {
-                value: pricePerPerson.toString(),
-                currency: 'USD'
-            }
-            createPayout('EMAIL', currentUser._id, amount, currentUser.email, planId)
         })
     }
 
@@ -102,6 +113,11 @@ const NewSubscription = ({ currentUser }) => {
                         )}
                     </div>
                     <button type='button' onClick={addSharer}>Add Another Sharer?</button>
+                </div>
+                <div className="newsub__form-date">
+                    <label htmlFor="date">On what day of the month would you like to have the money deposited?</label>
+                    <br/>
+                    <input type="number" max='31' min='1' id='date' onChange={(e) => setPayoutDate(e.target.value)} value={payoutDate}/>
                 </div>
                 <button type="submit" onClick={submitSubscription}>Done</button>
             </form>
