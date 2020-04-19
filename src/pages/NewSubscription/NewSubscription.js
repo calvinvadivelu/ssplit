@@ -61,9 +61,7 @@ const NewSubscription = ({ currentUser }) => {
             Number(payoutDate),
         ).then(res => {
             const planId = res.id
-            sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planId}`).then(res => {
-                console.log('res :', res);
-            })
+            sendEmails(sharers, currentUser.displayName, subscriptionName , `${window.location.href}/${planId}`)
         })
     }
 
