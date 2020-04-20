@@ -26,11 +26,11 @@ const ConfirmSharer = ({ user, history, subscriptionData, setSubscriptionData })
     useEffect(() => {
         if(!subscriptionData || !user) return;
         const currentSharer = subscriptionData.sharers.find(sharer => sharer.email === user.email)
-        if (currentSharer && currentSharer.confirmationId !== null) setAlreadySubscribed(true)
+        if (currentSharer && currentSharer.subscriptionId !== null) setAlreadySubscribed(true)
     }, [subscriptionData, user, setAlreadySubscribed])
 
-    const onApproval = async (confirmationId) => {
-        await confirmSharer(planID, user.email, confirmationId)
+    const onApproval = async (subscriptionId, payerId) => {
+        await confirmSharer(planID, payerId, user.email, subscriptionId)
         setApproved(true)
     }
     if (subscriptionData !== null) {
@@ -62,8 +62,7 @@ const ConfirmSharer = ({ user, history, subscriptionData, setSubscriptionData })
                         }}
                         onApprove={(data, actions) => {
                             return actions.subscription.get().then((details) => {
-                                console.log('details :', details);
-                                onApproval(details.id)
+                                onApproval(details.id, details.subscriber.payer_id)
                             });
                         }}
                     />
@@ -72,8 +71,8 @@ const ConfirmSharer = ({ user, history, subscriptionData, setSubscriptionData })
                         <div className="sharerconfirm-right__approved">
                             You have subscribed to pay your share of the subscription to {ownerInfo.name}
                         </div>
-                     :
-                    <div className="sharerconfirm-right__alreadysub">You have already subscribed to pay your share of this subscription.</div>
+                    :
+                        <div className="sharerconfirm-right__alreadysub">You have already subscribed to pay your share of this subscription.</div>
                 }
                 </section>
             </div>

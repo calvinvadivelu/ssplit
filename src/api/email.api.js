@@ -4,7 +4,7 @@ const headers = {
 }
 
 export const sendEmails = async (recipients, owner, subscription_name, link) => {
-    const response = await fetch('/sendEmails', {
+    const response = await fetch('/email/sendEmails', {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
