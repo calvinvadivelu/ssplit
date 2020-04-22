@@ -44,13 +44,14 @@ const NewSubscription = ({ currentUser }) => {
         if (subscriptionName === '' || subscriptionDescription === '')  return;
         const totalPrice = Number(subscriptionPrice)
         const pricePerPerson = totalPrice/(sharers.length+1)
+        const ownerInfo = {
+            name: currentUser.fullName,
+            email: currentUser.email
+        }
         createSubscription(
             subscriptionName,
             subscriptionDescription,
-            { 
-                name: currentUser.fullName,
-                email: currentUser.email
-            },
+            ownerInfo,
             'DIGITAL', "SOFTWARE",
             Number(subscriptionPrice),
             pricePerPerson,
@@ -69,55 +70,59 @@ const NewSubscription = ({ currentUser }) => {
     return (
         <div className='logged-in-page newsub'>
             <form action="submit" className="newsub__form">
-                <div className="newsub__form-name">
-                    <label htmlFor="subscription-name">What is the name of the Subscription Service you would like to share?</label>
-                    <CreatableSelect
-                        options={options}
-                        onChange={option => setSubscriptionName(option.value)}
-                        id='subscription-name'
-                        placeholder='Name?'
-                    />
-                </div>
-                <div className="newsub__form-description">
-                    <label htmlFor="subscription-name" className='newsub__form-description-label'>Short description of what subscription is?</label>
-                    <input type="text" id='subscription-name' className='newsub__form-description-input' onChange={(e) => setSubscriptionDescription(e.target.value)}/>
-                </div>
-                <div className="newsub__form-price">
-                    <label htmlFor="subscription-price">What is the total price of your Subscription Service monthly?</label>
-                    <NumberFormat
-                        thousandSeparator={true}
-                        decimalScale={2}
-                        allowNegative={false}
-                        placeholder='0.00'
-                        prefix={'$'}
-                        id='subscription-price'
-                        displayType='input'
-                        value={subscriptionPrice}
-                        onValueChange={(values) => setSubscriptionPrice(values.value)}
-                    />
-                </div>
-                <div className="newsub__form-sharers">
-                    <label htmlFor="subscription-sharers">Who are you planning on sharing this subscription with?</label>
-                    <div className='newsub__form-sharers__container'>
-                        <div className="newsub__form-sharers__container-labels">
-                            <label htmlFor="sharers-name">Name</label>
-                            <label htmlFor="sharers-email">Email</label>
-                        </div>
-                        {sharers.map((sharer, key) => 
-                            <div className="newsub__form-sharers__container-person" key={key}>
-                                <input type="text" autoComplete="new-password" id='sharers-name' className='newsub__form-sharers__container-person-name' value={sharer.name} onChange={(e) => editSharerName(e.target.value, key)}/>
-                                <input type="email" autoComplete="new-password" id='sharers-email' className='newsub__form-sharers__container-person-email'value={sharer.email} onChange={(e) => editSharerEmail(e.target.value, key)}/>
-                            </div>
-                        )}
+                <div className="newsub__form-left">
+                    <div className="newsub__form-name">
+                        <label htmlFor="subscription-name">What is the name of the Subscription Service you would like to share?</label>
+                        <CreatableSelect
+                            options={options}
+                            onChange={option => setSubscriptionName(option.value)}
+                            id='subscription-name'
+                            placeholder='Name?'
+                        />
                     </div>
-                    <button type='button' onClick={addSharer}>Add Another Sharer?</button>
+                    <div className="newsub__form-description">
+                        <label htmlFor="subscription-name" className='newsub__form-description-label'>Short description of what subscription is?</label>
+                        <input type="text" id='subscription-name' className='newsub__form-description-input' onChange={(e) => setSubscriptionDescription(e.target.value)}/>
+                    </div>
+                    <div className="newsub__form-price">
+                        <label htmlFor="subscription-price">What is the total price of your Subscription Service monthly?</label>
+                        <NumberFormat
+                            thousandSeparator={true}
+                            decimalScale={2}
+                            allowNegative={false}
+                            placeholder='0.00'
+                            prefix={'$'}
+                            id='subscription-price'
+                            displayType='input'
+                            value={subscriptionPrice}
+                            onValueChange={(values) => setSubscriptionPrice(values.value)}
+                        />
+                    </div>
                 </div>
-                <div className="newsub__form-date">
-                    <label htmlFor="date">On what day of the month would you like to have the money deposited?</label>
-                    <br/>
-                    <input type="number" max='31' min='1' id='date' onChange={(e) => setPayoutDate(e.target.value)} value={payoutDate}/>
+                <div className="newsub__form-right">
+                    <div className="newsub__form-sharers">
+                        <label htmlFor="subscription-sharers">Who are you planning on sharing this subscription with?</label>
+                        <div className='newsub__form-sharers__container'>
+                            <div className="newsub__form-sharers__container-labels">
+                                <label htmlFor="sharers-name">Name</label>
+                                <label htmlFor="sharers-email">Email</label>
+                            </div>
+                            {sharers.map((sharer, key) => 
+                                <div className="newsub__form-sharers__container-person" key={key}>
+                                    <input type="text" autoComplete="new-password" id='sharers-name' className='newsub__form-sharers__container-person-name' value={sharer.name} onChange={(e) => editSharerName(e.target.value, key)}/>
+                                    <input type="email" autoComplete="new-password" id='sharers-email' className='newsub__form-sharers__container-person-email'value={sharer.email} onChange={(e) => editSharerEmail(e.target.value, key)}/>
+                                </div>
+                            )}
+                        </div>
+                        <button type='button' onClick={addSharer}>Add Another Sharer?</button>
+                    </div>
+                    <div className="newsub__form-date">
+                        <label htmlFor="date">On what day of the month would you like to have the money deposited?</label>
+                        <br/>
+                        <input type="number" max='31' min='1' id='date' onChange={(e) => setPayoutDate(e.target.value)} value={payoutDate}/>
+                    </div>
+                    <button type="submit" onClick={submitSubscription}>Done</button>
                 </div>
-                <button type="submit" onClick={submitSubscription}>Done</button>
             </form>
         </div>
     );
