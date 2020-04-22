@@ -14,7 +14,7 @@ import ConfirmSharer from './pages/ConfirmSharer/ConfirmSharer';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { auth } from './firebase/firebase.utils';
 import { getUser } from './api/user.api';
 import './App.scss';
 const App = ({ setCurrentUser, currentUser }) => {
@@ -23,11 +23,8 @@ const App = ({ setCurrentUser, currentUser }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged( async userAuth => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth)
-        userRef.onSnapshot(async snapShot => {
-          const user = await getUser(snapShot.data().email)
-          setCurrentUser({...user})
-        })
+        const user = await getUser(userAuth.email)
+        setCurrentUser({...user})
       }
       else {
         setCurrentUser(userAuth);
