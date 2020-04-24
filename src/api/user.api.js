@@ -25,7 +25,6 @@ export const getUser = async (email) => {
         method: 'GET',
         headers: headers
     })
-    console.log('response :', response);
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     
