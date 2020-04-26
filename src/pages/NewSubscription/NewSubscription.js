@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import { createSubscription } from '../../api/paypal.api';
 import { sendEmails } from '../../api/email.api';
+
 import SUB_DATA from '../../constants/SUB_DATA';
 import ListComponent from '../../components/ListComponent/ListComponent';
 
@@ -57,13 +58,14 @@ const NewSubscription = ({ currentUser }) => {
         })
     }
 
-
+    
     return (
         <div className='logged-in-page newsub'>
             <form action="submit" className="newsub__form">
                 <div className="newsub__form-left">
                 <ListComponent
                 contents={SUB_DATA}
+                activePlan={activePlan}
                 setActivePlan={setActivePlan}
                 />
                 </div>

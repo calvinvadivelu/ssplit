@@ -11,9 +11,11 @@ props.contents: {
 }
 */
 
-const ListComponent = ({ contents, setActivePlan }) => {
+const ListComponent = ({ contents, activePlan, setActivePlan }) => {
     console.log('contents :>> ', contents);
     const [search, updateSearch] = useState('')
+
+    const listItems = contents.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase()))
 
     return (
         <div className="listbox">
@@ -21,7 +23,13 @@ const ListComponent = ({ contents, setActivePlan }) => {
                 <input type="search" value={search} onChange={(e) => updateSearch(e.target.value)} />
             </div>
             <div className='listbox-contents'>
-                {contents.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase())).map((item, idx) => <ListItem key={idx} item={item} setActivePlan={setActivePlan}/>)}
+                {listItems.map((item, idx) => {
+                    let active = false
+                    if (activePlan.subscriptionName === item.name){
+                        active = activePlan.planName ? activePlan.planName : true
+                    }
+                    return <ListItem key={idx} item={item} active={active} setActivePlan={setActivePlan}/>
+            })}
             </div>
         </div>
     );

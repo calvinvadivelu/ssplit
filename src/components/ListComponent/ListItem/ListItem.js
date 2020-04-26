@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './ListItem.scss';
 
-const ListItem = ({ item, setActivePlan }) => {
+const ListItem = ({ item, active, setActivePlan }) => {
     const [expanded, showPlans] = useState(false)
 
     const numPlans = item.plans ? item.plans.length : 0;
@@ -15,7 +15,7 @@ const ListItem = ({ item, setActivePlan }) => {
     const setActive = (plan = {planName: '', pricePerMonth: item.pricePerMonth}) => {
         const activePlan = {
             id: item.id,
-            name: item.name,
+            subscriptionName: item.name,
             description: item.description,
             picture:  item.picture,
             planName: plan.planName,
@@ -25,7 +25,7 @@ const ListItem = ({ item, setActivePlan }) => {
     }
     return (
         <>
-        <div className='listitem' onClick={handleClick}>
+        <div className='listitem' style={active ? {backgroundColor: 'blue'} : {}} onClick={handleClick}>
             <div className="listitem-image">
                 img
             </div>
@@ -36,13 +36,11 @@ const ListItem = ({ item, setActivePlan }) => {
         </div>
         { expanded &&
             <div className="listitem-plans">
-                {item.plans.map((plan, idx) => {
-                    return (
-                        <div key={idx} className="listitem-plans__plan" onClick={() => setActive(plan)} style={{width: `${90/numPlans}%`}} >
-                            {plan.planName}
-                        </div>
-                    )
-                })}
+                {item.plans.map((plan, idx) => (
+                    <div key={idx} className="listitem-plans__plan" onClick={() => setActive(plan)} style={{width: `${90/numPlans}%`, backgroundColor: `${active === plan.planName ? 'green' : ''}` }} >
+                        {plan.planName}
+                    </div>
+                ))}
             </div>
          }
         </>
