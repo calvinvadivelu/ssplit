@@ -12,7 +12,6 @@ props.contents: {
 */
 
 const ListComponent = ({ contents, activePlan, setActivePlan }) => {
-    console.log('contents :>> ', contents);
     const [search, updateSearch] = useState('')
 
     const listItems = contents.filter(item => item.name.toLowerCase().startsWith(search.toLowerCase()))
