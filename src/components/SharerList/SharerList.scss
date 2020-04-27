@@ -1,0 +1,76 @@
+.sharerslist{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 12px;
+    padding: 14px;
+    width: 350px;
+    min-width: 350px;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    &-sharer{
+        position: relative;
+        display: grid;
+        grid-template-columns: 70px calc(100% - 78px) 8px;
+        border-radius: 12px;
+        background-color: transparent;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        &:last-child{
+            margin: 0;
+        }
+        &__img{
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: 60px 60px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        &__details{
+            margin-left: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            &-name, &-email{
+                input{
+                    width: 100%;
+                    height: 28px;
+                    font-size: 14px;
+                    color: #555555;
+                    margin: 0;
+                    padding: 4px;
+                    box-sizing: border-box;
+                    border: none;
+                    border-bottom: 1px solid gray;
+                    background-color: transparent;
+                }
+            }
+            &-name{
+                width: 50%;
+            }
+            &-email{
+                width: 85%;
+            }   
+        }
+        &__delete{
+            display: flex;
+            align-items: center;
+            button{
+                padding: 0;
+                border: none;
+                margin: 0;
+                cursor: pointer;
+                background-color: white;
+            }
+        }
+        &:hover{
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }    
+    }
+}
