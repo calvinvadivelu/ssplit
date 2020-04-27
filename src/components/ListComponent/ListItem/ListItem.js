@@ -10,7 +10,7 @@ const ListItem = ({ item, active, setActivePlan }) => {
     const handleClick = () => {
         if (numPlans) {
             showPlans(!expanded)
-            document.addEventListener('click', closePlans)
+            if (!expanded) document.addEventListener('click', closePlans)
         }
         else setActive()
     }
@@ -45,7 +45,7 @@ const ListItem = ({ item, active, setActivePlan }) => {
                 <div className="listitem-details__description"><p>{item.description}</p></div>
             </div>
         </div>
-        <div className="listitem-plans" style ={expanded ? { margin: '16px 12px 20px 12px', display: 'flex', height: '40px' } : { margin: 0, height: '0'}}>
+        <div className="listitem-plans" style ={expanded ? { margin: '16px 12px 12px', display: 'flex', height: '40px' } : { margin: 0, height: '0'}}>
             {expanded && 
                 item.plans.map((plan, idx) => (
                     <div key={idx} className="listitem-plans__plan" onClick={() => setActive(plan)} style={{width: `${90/numPlans}%`, backgroundColor: `${active === plan.planName ? 'green' : ''}` }} >
