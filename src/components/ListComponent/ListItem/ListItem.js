@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './ListItem.scss';
 
-const ListItem = ({ item, active, setActivePlan }) => {
+const ListItem = ({ item, active, setExpandedHeight, setActivePlan }) => {
     const [expanded, showPlans] = useState(false)
 
     const numPlans = item.plans ? item.plans.length : 0;
@@ -15,13 +15,17 @@ const ListItem = ({ item, active, setActivePlan }) => {
         else setActive()
     }
 
+    useEffect(() => {
+        if (expanded) setTimeout(() => setExpandedHeight(expanded), 0)
+        else setExpandedHeight(expanded)
+    }, [expanded, setExpandedHeight])
+
     const closePlans = (e) => {
         if (!e.target.className.includes('listitem-plans__plan')) {
             showPlans(false);
             document.removeEventListener('click', closePlans)
         }
     }
-
 
     const setActive = (plan = {planName: '', pricePerMonth: item.pricePerMonth}) => {
         const activePlan = {

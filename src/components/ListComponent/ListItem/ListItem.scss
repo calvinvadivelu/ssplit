@@ -3,13 +3,16 @@
     display: grid;
     grid-row-gap: 12px;
     grid-template-columns: 70px auto;
-    background-color: rgb(224, 224, 224);
+    background-color: whitesmoke;
     margin: 6px 12px;
-    &:first-child{
-        margin-top: 12px;
-    }
-    &:last-child{
-        margin-top: 12px;
+    // &:first-child{
+    //     margin-top: 12px;
+    // }
+    // &:last-child{
+    //     margin-bottom: 12px;
+    // }
+    &:only-child{
+        margin: 12px;
     }
     border-radius: 8px;
     cursor: pointer;
