@@ -15,8 +15,8 @@ export const sendEmails = async (recipients, owner, subscription_name, link) => 
         })
     })
     const body = await response.json();
-    console.log('body of email send :', body);
     if (response.status !== 200) throw Error(body.message);
+    else console.log('email sent :)')
     
     return body;
 }
