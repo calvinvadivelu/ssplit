@@ -1,0 +1,33 @@
+.newsub{
+    &__form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 350px;
+        &-slideslice{
+            width: 350px;
+            overflow: hidden;
+            &__slider{
+                display: flex;
+                position: relative;
+                transition: right .5s ease-in-out;
+                right: 0;
+            }
+        }
+        &-date{
+            min-width: 350px;
+        }
+        &-btns{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            &__next{
+                transition: opacity .6s ease-in-out;
+                opacity: 0;
+                &.active{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
