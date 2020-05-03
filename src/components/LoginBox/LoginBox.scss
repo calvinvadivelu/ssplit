@@ -1,10 +1,11 @@
 .loginbox{
     width: 30vw;
     margin: auto;
+    margin-top: 20%;
     background-color: white;
     border-radius: 6px;
     box-shadow: 0px 0px 17px 2px rgba(0,0,0,0.33);
-    padding: 12px 32px;
+    padding: 12px 32px 32px;
     box-sizing: border-box;
     min-width: 400px;
     max-width: 440px;
@@ -15,33 +16,38 @@
             margin-right: 16px;
         }
     }
-    &-container{
+    &-footer{
         display: flex;
-        justify-content: flex-end;
-    }
-    &-btn{
-        cursor: pointer;
-        background-color: rgba(154, 0, 192, 0.678);
-        color: white;
-        border-radius: 4px;
-        border: 1px solid white;
-        font-size: 16px;
-        padding: 10px 14px;   
-    }
-    &-switch{
-        display: flex;
-        justify-content: flex-start;
-        transform: translateY(-30px);
-        width: calc(100% - 82px);
-        &__label{
-            margin-right: 10px;
+        justify-content: space-between;
+        &__switchview{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            &-label{
+                margin-right: 10px;
+            }
+            &-btn{
+                text-decoration: underline;
+                color: rgba(154, 0, 192, 0.678);
+                font-size: 16px;
+                cursor: pointer;
+            }
         }
         &__btn{
-            text-decoration: underline;
-            color: rgba(154, 0, 192, 0.678);
-            font-weight: bold;
-            font-size: 16px;
             cursor: pointer;
+            background-color: rgba(154, 0, 192, 0.678);
+            color: white;
+            border-radius: 4px;
+            border: 1px solid white;
+            font-size: 16px;
+            padding: 10px 14px;   
         }
+    }
+
+    &-error{
+        font-size: 13px;
+        color: red;
+        text-align: right;
+        margin-bottom: 12px;
     }
 }
