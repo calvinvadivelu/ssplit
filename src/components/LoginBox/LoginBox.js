@@ -43,7 +43,6 @@ const LoginBox = ({ onLogin }) => {
         <div className="loginbox">
         {loginView ? 
         <>
-            <div className="loginbox-title">LOG IN</div>
             <form action="submit" onSubmit={signin}>
                 <div className="loginbox-email">
                     <FormInput
@@ -65,12 +64,13 @@ const LoginBox = ({ onLogin }) => {
                         autoComplete="password"
                     />
                 </div>
-                <button className='loginbox-btn' type="submit">LOG IN</button>
+                <div className="loginbox-container">
+                    <button className='loginbox-btn' type="submit">log in</button>
+                </div>
             </form>
         </>
         :
         <>
-            <div className="loginbox-title">SIGN UP</div>
             <form action="submit" onSubmit={signup}>
                 <div className="loginbox-email">
                     <FormInput
@@ -124,12 +124,16 @@ const LoginBox = ({ onLogin }) => {
                         handleChange={e => setConfirmPassword(e.target.value)}
                     />
                 </div>
-                <button className='loginbox-btn' type="submit">SIGN UP</button>
+                <div className="loginbox-container">
+                    <button className='loginbox-btn' type="submit">sign up</button>
+                </div>
             </form>
         </>
         }
-        <span className="loginbox-btnlabel">{loginView ? "Don't have" : 'Already have'} an account?   </span>
-        <span className="loginbox-switch" onClick={() => setLoginView({loginView: !loginView})}>{!loginView ? 'LOG IN' : 'SIGN UP'}</span>
+        <div className="loginbox-switch">
+            <span className="loginbox-switch__label">{loginView ? "don't have" : 'already have'} an account?   </span>
+            <span className="loginbox-switch__btn" onClick={() => setLoginView(!loginView)}>{!loginView ? 'log in' : 'sign up'}</span>
+        </div>
     </div>
 );
 };
