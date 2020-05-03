@@ -13,37 +13,46 @@ const LoginBox = ({ onLogin }) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loginView, setLoginView] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
     const signup = async e => {
         e.preventDefault();
+        let error = false
         await auth.createUserWithEmailAndPassword(email, password)
         .catch(e => {
+            setErrorMessage(e.message);
+            error = true
             console.log('e.code :', e.code); 
-            console.log('e.message :', e.message);
         })
+        if (error) return;
         await createUser(`${firstName} ${lastName}`, email)
-
+        
         onLogin();
     }
 
     const signin = async e => {
         e.preventDefault();
+        let error = false
         await auth.signInWithEmailAndPassword(email, password)
         .catch(e => {
+            setErrorMessage(e.message)
+            error = true
             console.log('e.code :', e.code);
-            console.log('e.message :', e.message);
         })
-        
+        if (error) return;
         onLogin();
     }
 
-
+    const changeView = () => {
+        setLoginView(!loginView)
+        setErrorMessage('')
+    }
 
     return (
         <div className="loginbox">
         {loginView ? 
         <>
-            <form action="submit" onSubmit={signin}>
+            <form id='login' action="submit" onSubmit={signin}>
                 <div className="loginbox-email">
                     <FormInput
                         id='email'
@@ -64,14 +73,11 @@ const LoginBox = ({ onLogin }) => {
                         autoComplete="password"
                     />
                 </div>
-                <div className="loginbox-container">
-                    <button className='loginbox-btn' type="submit">log in</button>
-                </div>
             </form>
         </>
         :
         <>
-            <form action="submit" onSubmit={signup}>
+            <form id='signup' action="submit" onSubmit={signup}>
                 <div className="loginbox-email">
                     <FormInput
                         id='email'
@@ -124,18 +130,19 @@ const LoginBox = ({ onLogin }) => {
                         handleChange={e => setConfirmPassword(e.target.value)}
                     />
                 </div>
-                <div className="loginbox-container">
-                    <button className='loginbox-btn' type="submit">sign up</button>
-                </div>
             </form>
         </>
         }
-        <div className="loginbox-switch">
-            <span className="loginbox-switch__label">{loginView ? "don't have" : 'already have'} an account?   </span>
-            <span className="loginbox-switch__btn" onClick={() => setLoginView(!loginView)}>{!loginView ? 'log in' : 'sign up'}</span>
+        {errorMessage && <div className="loginbox-error">{errorMessage}</div>}
+        <div className="loginbox-footer">
+            <div className="loginbox-footer__switchview">
+                <span className="loginbox-footer__switchview-label">{loginView ? "don't have" : 'already have'} an account?   </span>
+                <span className="loginbox-footer__switchview-btn" onClick={changeView} >{!loginView ? 'log in' : 'sign up'}</span>
+            </div>
+            <button className='loginbox-footer__btn' form={loginView ? 'login' : 'signup'} type="submit">{loginView ? 'log in' : 'sign up'}</button>
         </div>
     </div>
-);
+    );
 };
 
 export default LoginBox;
