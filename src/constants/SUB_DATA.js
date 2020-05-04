@@ -8,13 +8,13 @@
 
 const SUBSCRIPTION_DATA = [
     { id: 1, name: 'Netflix', description: 'Movie Streaming Subscription', picture: 'https://cdn.vox-cdn.com/thumbor/lfpXTYMyJpDlMevYNh0PfJu3M6Q=/39x0:3111x2048/920x613/filters:focal(39x0:3111x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/49901753/netflixlogo.0.0.png', plans: [
-        {planName: 'Basic Plan', pricePerMonth: 8},
-        {planName: 'Standard Plan', pricePerMonth: 12},
-        {planName: 'Premium Plan', pricePerMonth: 16}
+        {planName: 'Basic', pricePerMonth: 8},
+        {planName: 'Standard', pricePerMonth: 12},
+        {planName: 'Premium', pricePerMonth: 16}
     ]},
     { id: 2, name: 'Spotify', description: 'Music Streaming Subscription', picture: '', plans: [
-        {planName: 'Individual Plan', pricePerMonth: 8},
-        {planName: 'Family Plan', pricePerMonth: 12},
+        {planName: 'Individual', pricePerMonth: 8},
+        {planName: 'Family', pricePerMonth: 12},
         // {planName: 'Student', pricePerMonth: 16}
     ]},
     { id: 3, name: 'Temp Subscription', description: 'Subscription For Something', pricePerMonth: 15, picture: ''},
