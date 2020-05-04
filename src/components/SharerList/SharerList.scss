@@ -8,6 +8,7 @@
         background-color: white;
         box-sizing: border-box;
         border-radius: 12px;
+        border-bottom-right-radius: 0;
         padding: 14px;
         width: 350px;
         min-width: 350px;
@@ -16,13 +17,13 @@
         &-sharer{
             position: relative;
             display: grid;
-            grid-template-columns: 70px calc(100% - 78px) 8px;
+            grid-template-columns: 70px calc(100% - 86px) 16px;
             border-radius: 12px;
             background-color: transparent;
             margin-bottom: 12px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
-            &:last-child{
+            &:last-child {
                 margin: 0;
             }
             &__img{
@@ -42,7 +43,7 @@
                 align-items: flex-start;
                 justify-content: center;
                 &-name, &-email{
-                    input{
+                    input {
                         width: 100%;
                         height: 28px;
                         font-size: 14px;
@@ -53,18 +54,18 @@
                         border: none;
                         border-bottom: 1px solid gray;
                         background-color: transparent;
-                        &.invalid{
+                        &.invalid {
                             border-bottom: 1px solid red;
                             color: red;
                         }
                     }
                 }
-                &-name{
+                &-name {
                     width: 50%;
                 }
                 &-email{
                     width: 85%;
-                }   
+                }
             }
             &__delete{
                 display: flex;
@@ -82,5 +83,27 @@
             }    
         }
     }
-    
+    &-add{
+        display: flex;
+        justify-content: flex-end;
+        &__container {
+            background-color: white;
+            width: auto;
+            padding: 0px 12px 8px;
+            border-bottom-right-radius: 12px;
+            border-bottom-left-radius: 12px;
+            label{
+                font-size: 13px;
+                margin-right: 8px;
+            }
+            button{
+                background-color: transparent;
+                cursor: pointer;
+                border: 1px solid rgb(187, 187, 187);
+                padding: 6px 10px;
+                border-radius: 2px;
+                color: grey;
+            }
+        }
+    }
 }

@@ -52,7 +52,14 @@ const SharerList = ({ sharers, editSharer, removeSharer, addSharer }) => {
                     </div>
                 )}
             </div>
-            {sharers.length < 5 && <button type='button' onClick={handleAddSharer}>Add Another Sharer?</button>}
+            {sharers.length < 5 && 
+            <div className="sharerslist-add">
+                <div className="sharerslist-add__container">
+                    <label htmlFor="addsharer">Add Another Sharer</label>
+                    <button type='button' id='addsharer' onClick={handleAddSharer}>+</button>
+                </div>
+            </div>
+            }
         </div>
     );
 };
