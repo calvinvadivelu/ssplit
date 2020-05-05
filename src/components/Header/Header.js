@@ -14,11 +14,16 @@ const Header = ({currentUser}) => {
                 <Link className="header__company-name" to='/'>ssplit</Link>
             </div>
             <div className="header__btns">
-                <Link className="header__btns-info" to='/info'>how it works?</Link>
                 {currentUser ? 
+                    <>
+                    <Link className="header__btns-new" to='/new'>ssplit a subscription</Link>
                     <Link className="header__btns-signup" to='/' onClick={() => auth.signOut()}>sign out</Link>
+                    </>
                     :
+                    <>
+                    <Link className="header__btns-info" to='/info'>how it works?</Link>
                     <Link className="header__btns-signup" to='/signup'>sign up</Link>
+                    </>
                 }
             </div>
         </div>
