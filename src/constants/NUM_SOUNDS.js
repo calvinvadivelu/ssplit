@@ -30,6 +30,7 @@ const NUM_SOUNDS = [
     'th',
     'th',
     'th',
+    'th',
     'st',
 ]
 export default NUM_SOUNDS
