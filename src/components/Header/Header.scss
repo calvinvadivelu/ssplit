@@ -6,22 +6,14 @@
     height: 54px;
     &__company{
         display: flex;
-        &-logo{
-            background-image: url('../../images/astronaut.svg');
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 100px;
-            height: 120px;
-            margin: 10px;
-        }   
-        &-name{
-            font-weight: bold;
-            font-size: 14px;
-            text-align: left;
-            color: whitesmoke;
-            margin-top: 20px;
+        &-supername{
+            position: relative;
+            top: 10px;        
+            display: flex;
+            align-items: flex-end;
+            font-size: 48px;
+            font-weight: 300;
             text-decoration: none;
-            height: 20px;
         }
     }
     &__btns{

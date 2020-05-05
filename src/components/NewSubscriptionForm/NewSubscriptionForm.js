@@ -40,7 +40,8 @@ const NewSubscriptionForm = ({ currentUser }) => {
         const pricePerPerson = activePlan.pricePerMonth/(sharers.length+1)
         const ownerInfo = {
             name: currentUser.fullName,
-            email: currentUser.email
+            email: currentUser.email,
+            id: currentUser._id
         }
         createSubscription(
             `${activePlan.subscriptionName} ${activePlan.planName}`,

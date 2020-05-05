@@ -10,8 +10,7 @@ const Header = ({currentUser}) => {
     return (
         <div className="header">
             <div className="header__company">
-                <Link className="header__company-logo" to='/'></Link>
-                <Link className="header__company-name" to='/'>ssplit</Link>
+                <Link className="header__company-supername" to='/'>ssplit</Link>
             </div>
             <div className="header__btns">
                 {currentUser ? 
