@@ -1,14 +1,11 @@
 .header{
     display: flex;
-    margin: 24px 8%;
+    margin: 0 8%;
     justify-content: space-between;
-    padding-top: 40px;
-    height: 54px;
+    padding-top: 32px;
     &__company{
         display: flex;
         &-supername{
-            position: relative;
-            top: 10px;        
             display: flex;
             align-items: flex-end;
             font-size: 48px;
@@ -20,25 +17,28 @@
         display: flex;
         margin-top: 14px;
         align-items: center;
+        justify-content: flex-end;
         & > a{
+            transition: all .3s ease-in-out;
             transition: background-color .2s ease-in-out;
             cursor: pointer;
             text-decoration: none;
             border-radius: 2px;
-            font-size: 14px;
+            font-size: 15px;
+            padding: 8px 24px;
+        }
+        a:first-of-type{
+            margin-right: 24px;
         }
         &-info{
             color: whitesmoke;
-            margin-right: 24px;
             font-weight: 500;
-            padding: 8px 24px;
             cursor: pointer;
             text-decoration: none;
         }
         &-new{
             background-color: rgb(255, 249, 255);
             color:rgb(85, 26, 139);
-            margin-right: 24px;
             font-weight: 500;
             padding: 8px 18px;
             &:hover{
@@ -46,14 +46,38 @@
             }
         }
         &-signup{
-            padding: 8px 24px;
             background-color: rgb(255, 200, 60);
             font-weight: 600;
             &:hover{
                 background-color: rgb(255, 185, 3);
-
+            }
+            img{
+                display: none;
             }
         }
     }
-
+}
+@media only screen and (max-width: 599px) {
+    .header{
+        margin: 0;
+        padding: 2% 4% 0px;
+        &__btns{
+            a:first-of-type{
+                margin-right: 8px;
+            }
+            & > a{
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            &-signup{
+                label{
+                    display: none;
+                }
+                img{
+                    height: 20px;
+                    display: block;
+                }
+            }
+        }
+    }
 }

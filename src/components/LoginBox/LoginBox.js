@@ -135,11 +135,11 @@ const LoginBox = ({ onLogin }) => {
         }
         {errorMessage && <div className="loginbox-error">{errorMessage}</div>}
         <div className="loginbox-footer">
+            <button className='loginbox-footer__actionbtn' form={loginView ? 'login' : 'signup'} type="submit">{loginView ? 'log in' : 'sign up'}</button>
             <div className="loginbox-footer__switchview">
                 <span className="loginbox-footer__switchview-label">{loginView ? "don't have" : 'already have'} an account?   </span>
                 <span className="loginbox-footer__switchview-btn" onClick={changeView} >{!loginView ? 'log in' : 'sign up'}</span>
             </div>
-            <button className='loginbox-footer__btn' form={loginView ? 'login' : 'signup'} type="submit">{loginView ? 'log in' : 'sign up'}</button>
         </div>
     </div>
     );
