@@ -26,6 +26,9 @@
             border-radius: 2px;
             font-size: 15px;
             padding: 8px 24px;
+            label{
+                cursor: pointer;
+            }
         }
         a:first-of-type{
             margin-right: 24px;
@@ -41,6 +44,9 @@
             color:rgb(85, 26, 139);
             font-weight: 500;
             padding: 8px 18px;
+            &.disabled{
+                display: none;
+            }
             &:hover{
                 background-color: rgb(250, 190, 255);
             }
@@ -70,6 +76,9 @@
                 font-size: 14px;
             }
             &-signup{
+                &.disabled{
+                    display: none;
+                }
                 label{
                     display: none;
                 }

@@ -15,15 +15,14 @@ const Header = ({currentUser, disableButtons}) => {
             </div>
             <div className="header__btns">
                 {currentUser ? 
-                    !disableButtons && 
                     <>
-                    <Link className="header__btns-new" to='/new'>ssplit a subscription</Link>
-                    <Link className="header__btns-signup" to='/' onClick={() => auth.signOut()}><label>sign out</label> <img src={logoutLogo} alt='Sign Out'></img></Link>
+                    <Link id='new subscription' className={`header__btns-new ${disableButtons ? 'disabled' : ''}`} to='/new'><label htmlFor='new subscription'>ssplit a subscription</label></Link>
+                    <Link id='signout' className={`header__btns-signup ${disableButtons ? 'disabled' : ''}`} to='/' onClick={() => auth.signOut()}><label htmlFor='signout'>sign out</label> <img src={logoutLogo} alt='Sign Out'></img></Link>
                     </>
                     :
                     <>
-                    <Link className="header__btns-info" to='/info'>how it works?</Link>
-                    <Link className="header__btns-signup" to='/signup'>sign up</Link>
+                    <Link id='moreinfo' className="header__btns-info" to='/info'><label htmlFor="moreinfo">how it works?</label></Link>
+                    <Link id='signup' className="header__btns-signup" to='/signup'><label htmlFor="signup">sign up</label></Link>
                     </>
                 }
             </div>
