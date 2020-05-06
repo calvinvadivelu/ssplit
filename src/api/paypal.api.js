@@ -16,17 +16,6 @@ export const getPlanDetails = async (planId) => {
     return body;
 }
 
-export const getUsersSubscriptions = async (userId) => {
-    const response = await fetch(`/paypal/usersplans?userId=${userId}`, {
-        method: 'GET',
-        headers: headers
-    })
-    const body = await response.json()
-    console.log('body :>> ', body);
-    return response
-}
-
-
 //POSTS
 export const createSubscription = async (name, description, ownerInfo, type, category, totalPrice, pricePerPerson, currency, sharers, receivingMethod, receiverAddress, payoutDate) => {
     const response = await fetch(`/paypal/createSubscription`, {

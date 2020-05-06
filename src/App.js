@@ -15,7 +15,6 @@ import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 import { auth } from './firebase/firebase.utils';
-import { getUser } from './api/user.api';
 import './App.scss';
 const App = ({ setCurrentUser, currentUser }) => {
 
@@ -23,11 +22,10 @@ const App = ({ setCurrentUser, currentUser }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged( async userAuth => {
       if (userAuth) {
-        const user = await getUser(userAuth.email)
-        setCurrentUser({...user})
+        await setCurrentUser(userAuth.email)
       }
       else {
-        setCurrentUser(userAuth);
+        setCurrentUser(null);
         console.log('when the user is logging out, or no userAuth', userAuth);
       }
     });
