@@ -7,12 +7,18 @@ const ListItem = ({ item, active, setExpandedHeight, setActivePlan }) => {
 
     const numPlans = item.plans ? item.plans.length : 0;
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefault();
         if (numPlans) {
             showPlans(!expanded)
             if (!expanded) document.addEventListener('click', closePlans)
         }
         else setActive()
+    }
+
+    const handlePlanClick = (e, plan) => {
+        e.preventDefault();
+        setActive(plan)
     }
 
     useEffect(() => {
@@ -40,21 +46,23 @@ const ListItem = ({ item, active, setExpandedHeight, setActivePlan }) => {
     }
     return (
         <>
-        <div className='listitem' style={active ? {backgroundColor: 'blue'} : {}} onClick={handleClick}>
-            <div className="listitem-image">
-                <img src={item.picture} height={70} width={70} alt=""/>
+        <button className='listitem__btncontainer' onClick={handleClick}>
+            <div className='listitem' style={active ? {backgroundColor: 'blue'} : {}}>
+                <div className="listitem-image">
+                    <img src={item.picture} height={70} width={70} alt=""/>
+                </div>
+                <div className="listitem-details">
+                    <div className="listitem-details__name">{item.name}</div>
+                    <div className="listitem-details__description"><p>{item.description}</p></div>
+                </div>
             </div>
-            <div className="listitem-details">
-                <div className="listitem-details__name">{item.name}</div>
-                <div className="listitem-details__description"><p>{item.description}</p></div>
-            </div>
-        </div>
-        <div className="listitem-plans" style ={expanded ? { margin: '16px 12px 12px', display: 'flex', height: '40px' } : { margin: 0, height: '0'}}>
+        </button>
+        <div className="listitem-plans" style ={expanded ? { margin: '8px 12px 12px', display: 'flex', height: '40px' } : { margin: 0, height: '0'}}>
             {expanded && 
                 item.plans.map((plan, idx) => (
-                    <div key={idx} className="listitem-plans__plan" onClick={() => setActive(plan)} style={{width: `${90/numPlans}%`, backgroundColor: `${active === plan.planName ? 'green' : ''}` }} >
+                    <button key={idx} className="listitem-plans__plan" onClick={(e) => handlePlanClick(e, plan)} style={{width: `${90/numPlans}%`, backgroundColor: `${active === plan.planName ? 'green' : ''}` }} >
                         {plan.planName}
-                    </div>
+                    </button>
                 ))
             }
         </div>
