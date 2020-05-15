@@ -44,7 +44,8 @@ const NewSubscriptionForm = ({ currentUser }) => {
             id: currentUser._id
         }
         createSubscription(
-            `${activePlan.subscriptionName} ${activePlan.planName}`,
+            activePlan.subscriptionName,
+            activePlan.planName,
             activePlan.description,
             ownerInfo,
             'DIGITAL',
@@ -56,6 +57,7 @@ const NewSubscriptionForm = ({ currentUser }) => {
             'EMAIL',
             currentUser.email,
             payoutDate,
+            activePlan.id,
         ).then(res => {
             const planId = res.id
             sendEmails(sharers, currentUser.displayName, activePlan.name , `${window.location.href}/${planId}`)
