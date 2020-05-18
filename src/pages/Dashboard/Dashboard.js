@@ -18,6 +18,7 @@ const Dashboard = ({ currentUser }) => {
                 <h1>Your Subscriptions</h1>
                 <div className="dashboard__data">
                     <SubList subscriptions={currentUser.subscriptions} setActivePlan={setActivePlan}/>
+                    <div className="dashboard__data-wall"/>
                     <SubOverview activeSubscription={currentUser.subscriptions[activePlan]}/>
                 </div>
             </div>
@@ -28,5 +29,5 @@ const Dashboard = ({ currentUser }) => {
 const mapStateToProps = (state) => ({
     currentUser: selectCurrentUser(state)
 })
-  
+
 export default connect(mapStateToProps, null)(Dashboard);
