@@ -12,7 +12,7 @@ import DatePicker from '../DatePicker/DatePicker';
 
 import './NewSubscriptionForm.scss';
 
-const NewSubscriptionForm = ({ currentUser }) => {
+const NewSubscriptionForm = ({ currentUser, onSubscriptionCreated }) => {
     const [sharers, editSharers] = useState([{ name: '', email: '' }])
     const [payoutDate, setPayoutDate] = useState(1)
     const [activePlan, setActivePlan] = useState({})
@@ -61,6 +61,7 @@ const NewSubscriptionForm = ({ currentUser }) => {
         ).then(res => {
             const planId = res.id
             sendEmails(sharers, currentUser.displayName, activePlan.name , `${window.location.href}/${planId}`)
+            onSubscriptionCreated();
         })
     }
 
