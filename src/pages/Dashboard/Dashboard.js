@@ -17,7 +17,7 @@ const Dashboard = ({ currentUser }) => {
             <div className="dashboard">
                 <h1>Your Subscriptions</h1>
                 <div className="dashboard__data">
-                    <SubList subscriptions={currentUser.subscriptions} setActivePlan={setActivePlan}/>
+                    <SubList subscriptions={currentUser.subscriptions} setActivePlan={setActivePlan} activePlan={activePlan}/>
                     <div className="dashboard__data-wall"/>
                     <SubOverview activeSubscription={currentUser.subscriptions[activePlan]}/>
                 </div>

@@ -8,17 +8,23 @@
         text-align: left;
         cursor: pointer;
         border-radius: 8px;
-        padding: 8px;
+        padding: 8px 12px 8px 8px;
         background-color: rgba(245, 245, 245, 0.45);
+        width: 340px;
+        transition: all .3s ease-in-out;
+        &.minimized{
+            width: 44px !important;
+        }
         &-btncontainer{
             outline: none;
-            width: 362px;
+            width: unset;
         }
         &-image{
             background-color: white;
             height: 48px;
             width: 48px;
             border-radius: 4px;
+            transition: padding .2s ease-in-out;
             img{
                 padding: 8px;
                 box-sizing: border-box;
@@ -41,6 +47,34 @@
             display: flex;
             align-items: center;
             margin-left: 24px;
+        }
+    }
+}
+@media only screen and (max-width: 960px) {
+    .sublist{
+        &__sub{
+            grid-template-columns: 48px 120px 88px;
+            width: 252px;
+            &-sharers{
+                display: none;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 599px) {
+    .sublist{
+        &__sub{
+            grid-template-columns: 48px;
+            width: 44px;
+            &-name{
+                display: none;
+            }
+            &-sharers{
+                display: none;
+            }
+            &-total{
+                display: none;
+            }
         }
     }
 }
