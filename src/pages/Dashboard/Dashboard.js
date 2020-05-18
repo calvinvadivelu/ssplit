@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { selectCurrentUser } from '../../redux/user/user.selector';
@@ -9,12 +9,18 @@ import SubOverview from './SubOverview/SubOverview';
 
 import './Dashboard.scss';
 const Dashboard = ({ currentUser }) => {
-    console.log('currentUser :>> ', currentUser.subscriptions);
+    const [ activePlan, setActivePlan ] = useState(null)
+    console.log('currentUser.subscriptions :>> ', currentUser.subscriptions);
     return (
         <div className='logged-in-page'>
             <Header/>
-            <SubList/>
-            <SubOverview/>
+            <div className="dashboard">
+                <h1>Your Subscriptions</h1>
+                <div className="dashboard__data">
+                    <SubList subscriptions={currentUser.subscriptions} setActivePlan={setActivePlan}/>
+                    <SubOverview activeSubscription={currentUser.subscriptions[activePlan]}/>
+                </div>
+            </div>
         </div>
     );
 };

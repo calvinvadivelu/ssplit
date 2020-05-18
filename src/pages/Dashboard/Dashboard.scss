@@ -1,0 +1,15 @@
+.dashboard{
+    // display: flex;
+    padding: 0px 8%;
+    height: 70vh;
+    &__data{
+        display: flex;
+    }
+}
+@media only screen and (max-width: 960px) {
+    .dashboard{
+        &__data{
+            flex-direction: column;
+        }
+    }
+}
