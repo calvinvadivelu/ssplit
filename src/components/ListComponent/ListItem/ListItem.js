@@ -48,8 +48,8 @@ const ListItem = ({ item, active, setExpandedHeight, setActivePlan }) => {
         <>
         <button className='listitem__btncontainer' onClick={handleClick}>
             <div className='listitem' style={active ? {backgroundColor: 'blue'} : {}}>
-                <div className="listitem-image">
-                    <img src={item.picture} height={70} width={70} alt=""/>
+                <div className="listitem-image" style={{backgroundColor: item.colourCode}}>
+                    <img src={item.picture} alt=""/>
                 </div>
                 <div className="listitem-details">
                     <div className="listitem-details__name">{item.name}</div>
