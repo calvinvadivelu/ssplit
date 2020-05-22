@@ -19,7 +19,10 @@ const Dashboard = ({ currentUser }) => {
                 <div className="dashboard__data">
                     <SubList subscriptions={currentUser.subscriptions} setActivePlan={setActivePlan} activePlan={activePlan}/>
                     <div className="dashboard__data-wall"/>
-                    <SubOverview activeSubscription={currentUser.subscriptions[activePlan]}/>
+                    {activePlan !== null ? 
+                        <SubOverview activeSubscription={currentUser.subscriptions[activePlan]}/>
+                        :
+                        <div className="dashboard__data-emptystate">ssplit a subscription or click on the left to see your active subscriptions</div>}
                 </div>
             </div>
         </div>
