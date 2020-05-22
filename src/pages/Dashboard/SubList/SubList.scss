@@ -3,15 +3,15 @@
     flex-direction: column;
     &__sub{
         display: grid;
-        grid-template-columns: 48px 120px 88px auto;
+        grid-template-columns: 48px 120px 88px;
         margin: 4px 0;
         text-align: left;
         cursor: pointer;
         border-radius: 8px;
         padding: 8px 12px 8px 8px;
         background-color: rgba(245, 245, 245, 0.45);
-        width: 340px;
-        transition: all .3s ease-in-out;
+        width: 258px;
+        transition: background-color .3s ease-in-out, width .3s ease-in-out;
         &.minimized{
             width: 44px !important;
         }
@@ -42,22 +42,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-        &-sharers{
-            display: flex;
-            align-items: center;
-            margin-left: 24px;
-        }
-    }
-}
-@media only screen and (max-width: 960px) {
-    .sublist{
-        &__sub{
-            grid-template-columns: 48px 120px 88px;
-            width: 252px;
-            &-sharers{
-                display: none;
-            }
         }
     }
 }
