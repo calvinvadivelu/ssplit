@@ -23,7 +23,6 @@ const DatePicker = ({ payoutDate, setPayoutDate }) => {
             <div className="datepicker-payoutmessage">
                 {payoutMessage}
             </div>
-            {/* <input type="number" max='31' min='1' id='date' onChange={(e) => setPayoutDate(e.target.value)} value={payoutDate}/> */}
         </div>
     );
 };

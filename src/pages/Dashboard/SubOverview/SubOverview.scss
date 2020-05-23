@@ -5,7 +5,7 @@
     padding: 18px;
     border-radius: 12px;
     background-color: rgba(245, 245, 245, 0.35);
-    height: 420px;
+    min-height: 420px;
     display: flex;
     flex-direction: column;
     &__header{
@@ -36,7 +36,7 @@
         }
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 18px;
+        margin-bottom: 12px;
         
     }
     &__sharers{
@@ -52,6 +52,7 @@
             background-color: rgba(245, 245, 245, 0.5);
             padding: 8px;
             min-width: 220px;
+            margin: 4px 0;
             border-radius: 8px;
             &-title{
                 font-weight: 500;
@@ -80,6 +81,15 @@
                 background-position: center;
                 background-repeat: no-repeat;
             }
+        }
+    }
+    &__payoutdate{
+        &-title{
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+        &-date{
+            font-size: 15px;
         }
     }
     &__footer{

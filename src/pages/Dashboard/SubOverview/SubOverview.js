@@ -1,12 +1,21 @@
 import React from 'react';
 
+import NUM_SOUNDS from '../../../constants/NUM_SOUNDS';
+
 import userIcons from '../../../images/userIcons';
 import paid from '../../../images/circle-check.svg'
 import unpaid from '../../../images/circle.svg'
 import './SubOverview.scss';
 const SubOverview = ({ activeSubscription }) => {
     console.log('activeSubscription :>> ', activeSubscription);
+    const { payoutDate } = activeSubscription
     if (activeSubscription) console.log('no subscription clicked');
+
+    let payoutMessage
+    if (payoutDate > 28) payoutMessage = <p>You will get an email about the PayPal deposit on the {payoutDate}<sup>{NUM_SOUNDS[payoutDate]}</sup> or the last day of the month`</p>
+    else if (payoutDate === 1) payoutMessage = <p>You will get an email about the PayPal deposit on the first of every month</p>
+    else payoutMessage = <p>You will get an email about the PayPal deposit on the {payoutDate}<sup>{NUM_SOUNDS[payoutDate-1]}</sup> of every month</p>
+
     return (
         <div className='suboverview'>
             <div className="suboverview__header">
@@ -45,6 +54,10 @@ const SubOverview = ({ activeSubscription }) => {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className="suboverview__payoutdate">
+                <h5 className="suboverview__payoutdate-title">Payout Date</h5>
+                <p className="suboverview__payoutdate-date">{payoutMessage}</p>
             </div>
             <div className="suboverview__footer">
                 <div className="suboverview__footer-cancel">
