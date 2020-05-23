@@ -37,7 +37,7 @@ const NewSubscriptionForm = ({ currentUser, onSubscriptionCreated }) => {
     }
     const submitSubscription = (e) => {
         e.preventDefault();
-        const pricePerPerson = activePlan.pricePerMonth/(sharers.length+1)
+        const pricePerPerson = +((activePlan.pricePerMonth/(sharers.length+1)).toFixed(2))
         const ownerInfo = {
             name: currentUser.fullName,
             email: currentUser.email,
